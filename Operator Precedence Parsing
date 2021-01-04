@@ -1,0 +1,303 @@
+#include<conio.h>
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+Int getOperatorPosition(char );
+
+#define node struct tree1
+
+Int matrix[5][5]={
+
+        {1,0,0,1,1},
+
+        {1,1,0,1,1},
+
+        {0,0,0,2,3},
+
+        {1,1,3,1,1},
+
+        {0,0,0,3,2}};
+
+Int tos=-1;
+
+Void matrix_value(void);
+
+//node create_node(char,*node);void show_tree( node *);
+
+Int isOperator(char );
+
+Struct tree1
+
+{
+
+   Char data;
+
+   Node  *lptr; 
+
+   Node  *rptr;
+
+}*first;
+
+Struct opr
+
+{
+
+    Char op_name; 
+
+    Node *t;
+
+}oprate[50];
+
+Char cur_op[5]={‘+’,’*’,’(‘,’)’,’[‘};
+
+Char stack_op[5]={‘+’,’*’,’(‘,’)’,’]’};
+
+Void  main()
+
+{
+
+    Char exp[10];
+
+    Int ssm=0,row=0,col=0;
+
+    Node *temp;
+
+//    clrscr();
+
+
+
+    Printf(“Enter Exp : “);
+
+    Scanf(“%s”,exp);
+
+
+
+    Matrix_value();
+
+    While(exp[ssm] != ‘\0’)
+
+    {
+
+        If(ssm==0)
+
+        {
+
+            Tos++;
+
+            Oprate[tos].op_name = exp[tos];
+
+        }
+
+        Else
+
+        {
+
+            If(isOperator(exp[ssm]) == -1)
+
+            {
+
+                Oprate[tos].t = (node*) malloc (sizeof(node));
+
+                Oprate[tos].t->data = exp[ssm];
+
+                Oprate[tos].t->lptr = ‘\0’;
+
+                Oprate[tos].t->rptr = ‘\0’;
+
+            }
+
+            Else
+
+            {
+
+                Row = getOperatorPosition(oprate[tos].op_name);
+
+                Col = getOperatorPosition(exp[ssm]);
+
+                If(matrix[row][col] == 0)
+
+                {
+
+                    Tos++;
+
+                    Oprate[tos].op_name = exp[ssm];
+
+                }
+
+                Elseif(matrix[row][col] == 1)
+
+                {
+
+                    Temp = (node*) malloc (sizeof(node));
+
+                    Temp->data = oprate[tos].op_name;
+
+                    Temp->lptr = (oprate[tos-1].t);
+
+                    Temp->rptr = (oprate[tos].t);
+
+                    Tos--;
+
+                    Oprate[tos].t = temp;
+
+                    Ssm--;
+
+                }
+
+                Elseif(matrix[row][col] == 2)
+
+                {
+
+                    //temp = (node*) malloc (sizeof(node));
+
+                    Temp = oprate[tos].t;
+
+                    Tos--;
+
+                    Oprate[tos].t = temp;
+
+                }
+
+                Elseif(matrix[row][col] == 3)
+
+                {
+
+                                  Printf(“\nExpression is Invalid…\n”);
+
+   Printf(“%c  %c can not occur simultaneously\n”,oprate[tos].op_name,exp[ssm]);
+
+                    Break;
+
+                }
+
+            }
+
+        }
+
+        Ssm++;
+
+    }
+
+    Printf(“show tree \n\n\n”);
+
+    Show_tree(oprate[tos].t);
+
+    Printf(“Over”);
+
+    Getch();
+
+    Getch();
+
+}
+
+Int isOperator(char c)
+
+{
+
+    Int i=0;
+
+     For(i=0;i<5;i++)
+
+     {
+
+        If (c==cur_op[i] || c==stack_op[i])
+
+            Break;
+
+     }
+
+     If(i==5)
+
+     Return (-1);
+
+     Elsereturn I;
+
+}
+
+Int getOperatorPosition(char c)
+
+{
+
+    Int I;
+
+    For(i=0;i<5;i++)
+
+    {
+
+        If (c==cur_op[i] || c==stack_op[i])
+
+            Break;
+
+    }
+
+    Return I;
+
+}
+
+Void show_tree(node *start)
+
+{
+
+    If(start->lptr != NULL)
+
+        Show_tree(start->lptr);
+
+    If(start->rptr != NULL)
+
+        Show_tree(start->rptr);
+
+    Printf(“%c \n”,start->data);
+
+}
+
+Void matrix_value(void)
+
+{
+
+     Int I,j;
+
+     Printf(“OPERATOR PRECEDENCE MATRIX\n”);
+
+     Printf(“===========================\n   “);
+
+ For(i=0; i<5; i++)
+
+ {
+
+    Printf(“%c “,stack_op[i]);
+
+ }
+
+ Printf(“\n”);
+
+For(i=0;i<5;i++)
+
+ {
+
+    Printf(“%c  “,cur_op[i]);
+
+   For(j=0;j<5;j++)
+
+   {
+
+        If(matrix[i][j] == 0)
+
+            Printf(“< “);
+
+        Elseif(matrix[i][j] == 1)
+
+            Printf(“> “);
+
+        Elseif(matrix[i][j] == 2)
+
+            Printf(“= “);
+
+        Elseif(matrix[i][j] == 3)
+
+ Printf(“  “);
+
+}    Printf(“\n”);
+
+}}
